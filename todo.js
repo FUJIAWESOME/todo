@@ -1,15 +1,23 @@
-const list = {
-    "create a new practice task": "In Progress",
-    "make a bed": "Done",
-    "write a post": "To Do",
+const STATUS = {
+    TO_DO: "To Do",
+    IN_PROGRESS: "In Progress",
+    DONE: "Done",
 }
 
-function changeStatus(task, taskStatus) {
-    this[task] = taskStatus;
+const DEFAULT_STATUS = STATUS.TO_DO;
+
+const list = {
+    "create a new practice task": STATUS.IN_PROGRESS,
+    "make a bed": STATUS.DONE,
+    "write a post": STATUS.TO_DO,
+}
+
+function changeStatus(task, status) {
+    this[task] = status;
 }
 
 function addTask(task) {
-    this[task] = "To Do";
+    this[task] = DEFAULT_STATUS;
 }
 
 function deleteTask(task) {
@@ -17,17 +25,17 @@ function deleteTask(task) {
 }
 
 function showList() {
-    console.log("ToDo:");
+    console.log(`${STATUS.TO_DO}:`);
     for (let key in this) {
-        if (this[key] === "To Do") console.log(` "${key}",`)
+        if (this[key] === STATUS.TO_DO) console.log(` "${key}",`)
     }
-    console.log("In Progress:");
+    console.log(`${STATUS.IN_PROGRESS}:`);
     for (let key in this) {
-        if (this[key] === "In Progress") console.log(` "${key}",`)
+        if (this[key] === STATUS.IN_PROGRESS) console.log(` "${key}",`)
     }
-    console.log("Done:");
+    console.log(`${STATUS.DONE}:`);
     for (let key in this) {
-        if (this[key] === "Done") console.log(` "${key}",`)
+        if (this[key] === STATUS.DONE) console.log(` "${key}",`)
     }
 }
 
@@ -40,6 +48,6 @@ console.log(list);
 list.changeStatus("write a post", "Done");
 list.addTask("write a todo list");
 list.deleteTask("make a bed");
+list.deleteTask("write a post");
 list.showList();
 console.log(list);
-
