@@ -79,7 +79,6 @@ function showBy(choose) {
     }
 }
 
-
 console.log(list);
 
 changeStatus("write a post", "Done");
