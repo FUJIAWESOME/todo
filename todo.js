@@ -4,50 +4,88 @@ const STATUS = {
     DONE: "Done",
 }
 
-const DEFAULT_STATUS = STATUS.TO_DO;
-
-const list = {
-    "create a new practice task": STATUS.IN_PROGRESS,
-    "make a bed": STATUS.DONE,
-    "write a post": STATUS.TO_DO,
+const PRIORITY = {
+    LOW: 'low',
+    HIGH: 'high',
 }
 
+const DEFAULT_STATUS = STATUS.TO_DO;
+
+const list = [
+    {
+        name: "create a new practice task",
+        status: STATUS.IN_PROGRESS,
+        priority: PRIORITY.LOW,
+    },
+    {
+        name: "make a bed",
+        status: STATUS.DONE,
+        priority: PRIORITY.LOW,
+    },
+    {
+        name: "write a post",
+        status: STATUS.TO_DO,
+        priority: PRIORITY.HIGH,
+    },
+]
+
 function changeStatus(task, status) {
-    this[task] = status;
+    list.forEach(element => {
+        if (element.name === task) {
+            element.status = status;
+        }
+    });
 }
 
 function addTask(task) {
-    this[task] = DEFAULT_STATUS;
+    list.push({
+        name: task,
+        status: STATUS.TO_DO,
+        priority: PRIORITY.HIGH,
+    })
 }
 
 function deleteTask(task) {
-    delete this[task];
+    list.forEach((element, index) => {
+        if (element.name === task) {
+            list.splice(index, 1);
+        }
+    })
 }
 
-function showList() {
-    console.log(`${STATUS.TO_DO}:`);
-    for (let key in this) {
-        if (this[key] === STATUS.TO_DO) console.log(` "${key}",`)
-    }
-    console.log(`${STATUS.IN_PROGRESS}:`);
-    for (let key in this) {
-        if (this[key] === STATUS.IN_PROGRESS) console.log(` "${key}",`)
-    }
-    console.log(`${STATUS.DONE}:`);
-    for (let key in this) {
-        if (this[key] === STATUS.DONE) console.log(` "${key}",`)
+function showBy(choose) {
+    if (choose === 'status') {
+        console.log(`${STATUS.TO_DO}:`);
+        list.forEach(element => {
+            if (element.status === STATUS.TO_DO) console.log(` "${element.name}",`)
+        })
+        console.log(`${STATUS.IN_PROGRESS}:`);
+        list.forEach(element => {
+            if (element.status === STATUS.IN_PROGRESS) console.log(` "${element.name}",`)
+        })
+        console.log(`${STATUS.DONE}:`);
+        list.forEach(element => {
+            if (element.status === STATUS.DONE) console.log(` "${element.name}",`)
+        })
+    } else if (choose === 'priority') {
+        console.log(`${PRIORITY.LOW}:`);
+        list.forEach(element => {
+            if (element.priority === PRIORITY.LOW) console.log(` "${element.name}",`)
+        })
+        console.log(`${PRIORITY.HIGH}:`);
+        list.forEach(element => {
+            if (element.priority === PRIORITY.HIGH) console.log(` "${element.name}",`)
+        })
     }
 }
 
-list.changeStatus = changeStatus;
-list.addTask = addTask;
-list.deleteTask = deleteTask;
-list.showList = showList;
 
 console.log(list);
-list.changeStatus("write a post", "Done");
-list.addTask("write a todo list");
-list.deleteTask("make a bed");
-list.deleteTask("write a post");
-list.showList();
+
+changeStatus("write a post", "Done");
+addTask("write a todo list");
+deleteTask("make a bed");
+deleteTask("write a post");
+showBy('priority');
+
 console.log(list);
