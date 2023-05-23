@@ -10,6 +10,7 @@ const PRIORITY = {
 }
 
 const DEFAULT_STATUS = STATUS.TO_DO;
+const DEFAULT_PRIORITY = PRIORITY.HIGH;
 
 const list = [
     {
@@ -30,27 +31,21 @@ const list = [
 ]
 
 function changeStatus(task, status) {
-    list.forEach(element => {
-        if (element.name === task) {
-            element.status = status;
-        }
-    });
+    const index = list.findIndex(item => item.name === task)
+    list[index].status = status
 }
 
 function addTask(task) {
     list.push({
         name: task,
-        status: STATUS.TO_DO,
-        priority: PRIORITY.HIGH,
+        status: DEFAULT_STATUS,
+        priority: DEFAULT_PRIORITY,
     })
 }
 
 function deleteTask(task) {
-    list.forEach((element, index) => {
-        if (element.name === task) {
-            list.splice(index, 1);
-        }
-    })
+    const index = list.findIndex(item => item.name === task)
+    list.splice(index, 1)
 }
 
 function showBy(choose) {
